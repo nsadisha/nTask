@@ -15,10 +15,10 @@ fun AppNavGraph(
     navController: NavHostController
 ) {
     NavHost(navController = navController, startDestination = AppRoutes.WELCOME_SCREEN.name){
-        composable(AppRoutes.HOME_SCREEN.name) { HomeScreen() }
-        composable(AppRoutes.SETTINGS_SCREEN.name) { SettingsScreen() }
-        composable(AppRoutes.TASKS_SCREEN.name) { TasksScreen() }
-        composable(AppRoutes.WELCOME_SCREEN.name) { WelcomeScreen() }
-        composable(AppRoutes.SETUP_SCREEN.name) { SetupScreen() }
+        composable(AppRoutes.HOME_SCREEN.name) { HomeScreen(navController) }
+        composable(AppRoutes.SETTINGS_SCREEN.name) { SettingsScreen(navController) }
+        composable(AppRoutes.TASKS_SCREEN.name) { TasksScreen(navController) }
+        composable(AppRoutes.WELCOME_SCREEN.name) { WelcomeScreen(navController) }
+        composable(AppRoutes.SETUP_SCREEN.name) { SetupScreen(navController) }
     }
 }
