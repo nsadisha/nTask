@@ -43,6 +43,7 @@ fun SetupScreen(
     vm: OnboardingViewModel = viewModel()
 ) {
     var name by remember { mutableStateOf("") }
+    var isError by remember { mutableStateOf(false) }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.CenterVertically),
@@ -59,7 +60,7 @@ fun SetupScreen(
             Text(
                 text = stringResource(id = R.string.setup_title),
                 style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.surface
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
 
@@ -77,7 +78,8 @@ fun SetupScreen(
                 label = { Text(stringResource(id = R.string.setup_txt_lbl)) },
                 placeholder = { Text(stringResource(id = R.string.setup_txt_hint)) },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                isError = isError && name == "",
             )
         }
 
@@ -118,8 +120,13 @@ fun SetupScreen(
                 )
                 Button(
                     onClick = {
-                        vm.writeName(name)
-                        navController.navigate(AppRoutes.HOME_SCREEN.name)
+                        if(name != ""){
+                            isError = false;
+                            vm.writeName(name)
+                            navController.navigate(AppRoutes.HOME_SCREEN_HOST.name)
+                        }else{
+                            isError = true;
+                        }
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.background
