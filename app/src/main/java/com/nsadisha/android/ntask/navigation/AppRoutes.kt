@@ -1,9 +1,7 @@
 package com.nsadisha.android.ntask.navigation
 
 enum class AppRoutes {
-    HOME_SCREEN,
-    SETTINGS_SCREEN,
-    TASKS_SCREEN,
+    HOME_SCREEN_HOST,
     SETUP_SCREEN,
     WELCOME_SCREEN
 }

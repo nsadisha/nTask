@@ -17,6 +17,25 @@ val comicNeueFamily = FontFamily(
 
 // Set of Material typography styles to start with
 val Typography = Typography(
+    titleLarge = TextStyle(
+        fontSize = 48.sp,
+        lineHeight = 48.sp,
+        fontFamily = comicNeueFamily,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+    ),
+    titleMedium = TextStyle(
+        fontSize = 28.sp,
+        lineHeight = 28.sp,
+        fontFamily = comicNeueFamily,
+        fontWeight = FontWeight.Bold,
+    ),
+    titleSmall = TextStyle(
+        fontSize = 18.sp,
+        lineHeight = 18.sp,
+        fontFamily = comicNeueFamily,
+        fontWeight = FontWeight.Bold,
+    ),
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
@@ -24,13 +43,6 @@ val Typography = Typography(
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp,
         color = black
-    ),
-    titleLarge = TextStyle(
-        fontSize = 48.sp,
-        lineHeight = 48.sp,
-        fontFamily = comicNeueFamily,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center,
     ),
     bodyMedium = TextStyle(
         fontSize = 16.sp,
@@ -45,6 +57,13 @@ val Typography = Typography(
         fontFamily = comicNeueFamily,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center
+    ),
+    labelSmall = TextStyle(
+        fontSize = 14.sp,
+        lineHeight = 16.sp,
+        fontFamily = comicNeueFamily,
+        fontWeight = FontWeight.Bold,
+        letterSpacing = 0.5.sp,
     )
     /* Other default text styles to override
     titleLarge = TextStyle(
