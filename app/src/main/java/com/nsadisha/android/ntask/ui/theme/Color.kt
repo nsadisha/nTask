@@ -2,7 +2,6 @@ package com.nsadisha.android.ntask.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-
 val blue = Color(0xFF0183F0)
 val white = Color(0xFFFFFFFF)
 val black = Color(0xFF323145)
