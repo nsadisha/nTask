@@ -4,12 +4,21 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.nsadisha.android.ntask.database.AppDatabase
 import com.nsadisha.android.ntask.database.Task
 import com.nsadisha.android.ntask.ui.models.TaskHomeModel
+import kotlinx.coroutines.launch
 
 class TaskViewModel(application: Application) : AndroidViewModel(application) {
+    private val taskDao by lazy { AppDatabase.getDatabase(application).taskDao() }
+
     private var _tasks = MutableLiveData<List<Task>>(listOf())
     var tasks: LiveData<List<Task>> = _tasks
+
+    init {
+        updateTasks()
+    }
 
     private var _taskHomeModel = MutableLiveData(
         TaskHomeModel(
@@ -21,35 +30,24 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
     var taskHomeModel: LiveData<TaskHomeModel> = _taskHomeModel
 
     fun addTask(task: Task) {
-        val newTask = Task(
-            id = taskHomeModel.value!!.taskCount.plus(1),
-            name = task.name,
-            description = task.description,
-            completed = task.completed,
-            completeOn = task.completeOn
-        )
-        val updatedTasks = _tasks.value!!.plus(newTask).toMutableList()
-        _tasks.value = updatedTasks
-        updateTaskHomeModel()
+        viewModelScope.launch {
+            taskDao.insert(task).also { updateTasks() }
+        }
     }
 
     fun updateTask(task: Task){
-        val newTask = task.copy()
-
-        val index = _tasks.value!!.indexOfFirst { it.id == newTask.id }
-        if(index != -1){
-            val updatedTasks = _tasks.value!!.toMutableList()
-            updatedTasks[index] = newTask
-            _tasks.value = updatedTasks
+        viewModelScope.launch {
+            taskDao.update(task).also { updateTasks() }
         }
-        updateTaskHomeModel()
     }
 
     fun toggleCompletion(task: Task){
         val newTask = task.copy()
         newTask.completed = !newTask.completed
 
-        updateTask(newTask)
+        viewModelScope.launch {
+            taskDao.update(newTask).also { updateTasks() }
+        }
     }
 
     private fun updateTaskHomeModel() {
@@ -60,5 +58,12 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
         )
 
         _taskHomeModel.value = newModel
+    }
+
+    private fun updateTasks(){
+        viewModelScope.launch {
+            _tasks.value = taskDao.getAllTasks()
+            updateTaskHomeModel()
+        }
     }
 }

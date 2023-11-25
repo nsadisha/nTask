@@ -26,6 +26,7 @@ import com.nsadisha.android.ntask.ui.components.CategoryCard
 import com.nsadisha.android.ntask.ui.models.CategoryCardModel
 import com.nsadisha.android.ntask.vm.OnboardingViewModel
 import com.nsadisha.android.ntask.vm.TaskViewModel
+import kotlinx.coroutines.coroutineScope
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
