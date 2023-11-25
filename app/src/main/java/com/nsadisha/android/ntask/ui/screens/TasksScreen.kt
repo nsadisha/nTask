@@ -3,9 +3,6 @@ package com.nsadisha.android.ntask.ui.screens
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -52,7 +49,7 @@ fun TasksScreen(
 
     val tasks by vm.tasks.observeAsState()
 
-    var filteredTasks = tasks?.filter {
+    val filteredTasks = tasks?.filter {
         it.name.contains(query, ignoreCase = true)
             .or(it.description.contains(query, ignoreCase = true))
     }
