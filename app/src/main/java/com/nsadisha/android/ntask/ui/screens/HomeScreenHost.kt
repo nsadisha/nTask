@@ -1,5 +1,7 @@
 package com.nsadisha.android.ntask.ui.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,28 +23,34 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.nsadisha.android.ntask.ui.components.AddNewTaskBottomSheet
 import com.nsadisha.android.ntask.ui.models.NavItemModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreenHost() {
     var selectedItem by remember { mutableIntStateOf(0) }
+    var showBottomSheet by remember { mutableStateOf(false) }
+
+    fun toggleAboutSheet() { showBottomSheet = !showBottomSheet }
 
     val items = listOf(
         NavItemModel(
             label = "Home",
             icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
-            view = { HomeScreen() }
+            view = { HomeScreen({ toggleAboutSheet() }) }
         ),
         NavItemModel(
             label = "Tasks",
             icon = { Icon(Icons.Filled.CheckCircle, contentDescription = "Tasks") },
-            view = { TasksScreen() }
+            view = { TasksScreen({ toggleAboutSheet() }) }
         ),
         NavItemModel(
             label = "Settings",
@@ -95,6 +103,8 @@ fun HomeScreenHost() {
                     )
                 }
             }
+
+            AddNewTaskBottomSheet(show = showBottomSheet, onDismiss = { toggleAboutSheet() })
         }
     }
 }

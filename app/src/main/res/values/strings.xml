@@ -12,4 +12,34 @@
     <string name="setup_btn_text">Finish</string>
     <string name="setup_txt_lbl">Name</string>
     <string name="setup_txt_hint">John Doe</string>
+
+    <!--tasks screen-->
+    <string name="tasks_txt_lbl">Search</string>
+    <string name="tasks_txt_hint">Today\'s workout</string>
+    <string name="tasks_empty_message">You don\'t have any tasks to complete!</string>
+    <string name="tasks_search_empty_message">No result found!</string>
+
+    <!--about bottom sheet-->
+    <string name="abs_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Ut enim ad minim veniam, quis nostrud.</string>
+    <string name="abs_filled_btn_lbl">Rate This App</string>
+    <string name="abs_outline_btn_lbl">Explore More</string>
+
+    <!--new task bottom sheet-->
+    <string name="nbs_title">New Task</string>
+    <string name="nbs_filled_btn_lbl">Add Task</string>
+    <string name="nbs_outline_btn_lbl">Reset</string>
+    <string name="nbs_name_lbl">Name</string>
+    <string name="nbs_name_hint">Go to gym</string>
+    <string name="nbs_description_lbl">Description</string>
+    <string name="nbs_description_hint">Go to gym at 4:00 pm.</string>
+    <string name="nbs_complete_lbl">Complete on</string>
+    <string name="nbs_complete_hint">08/11/20xx</string>
+    <string name="nbs_complete_support">YYYY-MM-DD</string>
+    <string name="nbs_date_formatter">YYYY-MM-dd</string>
+
+    <!--task bottom sheet-->
+    <string name="tbs_complete_lbl">Complete</string>
+    <string name="tbs_todo_lbl">Make Todo</string>
+    <string name="tbs_outline_btn_lbl">Edit</string>
+    <string name="tbs_complete_on_lbl">Complete on</string>
 </resources>

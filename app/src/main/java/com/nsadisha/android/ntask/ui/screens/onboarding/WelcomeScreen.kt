@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.nsadisha.android.ntask.R
 import com.nsadisha.android.ntask.navigation.AppRoutes
+import com.nsadisha.android.ntask.ui.components.FilledButton
 
 @Composable
 fun WelcomeScreen(navController: NavHostController) {
@@ -85,21 +84,13 @@ fun WelcomeScreen(navController: NavHostController) {
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.background
                 )
-                Button(
-                    onClick = {
-                              navController.navigate(AppRoutes.SETUP_SCREEN.name)
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.background
-                    ),
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)
-                ){
-                    Text(
-                        text = stringResource(id = R.string.welcome_btn_text),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                }
+                FilledButton(
+                    label = stringResource(id = R.string.welcome_btn_text),
+                    onclick = {navController.navigate(AppRoutes.SETUP_SCREEN.name)},
+                    modifier = Modifier.fillMaxWidth(),
+                    backgroundColor = MaterialTheme.colorScheme.background,
+                    contentColor = MaterialTheme.colorScheme.primary
+                )
             }
         }
     }

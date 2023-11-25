@@ -12,9 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -34,9 +31,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.nsadisha.android.ntask.R
 import com.nsadisha.android.ntask.navigation.AppRoutes
+import com.nsadisha.android.ntask.ui.components.FilledButton
 import com.nsadisha.android.ntask.vm.OnboardingViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SetupScreen(
     navController: NavHostController,
@@ -44,6 +41,16 @@ fun SetupScreen(
 ) {
     var name by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
+
+    fun handleFinish() {
+        if(name != ""){
+            isError = false;
+            vm.writeName(name)
+            navController.navigate(AppRoutes.HOME_SCREEN_HOST.name)
+        }else{
+            isError = true;
+        }
+    }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(0.dp, Alignment.CenterVertically),
@@ -118,29 +125,13 @@ fun SetupScreen(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.background
                 )
-                Button(
-                    onClick = {
-                        if(name != ""){
-                            isError = false;
-                            vm.writeName(name)
-                            navController.navigate(AppRoutes.HOME_SCREEN_HOST.name)
-                        }else{
-                            isError = true;
-                        }
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.background
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 10.dp)
-                ){
-                    Text(
-                        text = stringResource(id = R.string.setup_btn_text),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                }
+                FilledButton(
+                    label = stringResource(id = R.string.welcome_btn_text),
+                    modifier = Modifier.fillMaxWidth(),
+                    backgroundColor = MaterialTheme.colorScheme.background,
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    onclick = { handleFinish() },
+                )
             }
         }
     }
