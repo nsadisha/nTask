@@ -8,22 +8,30 @@ import com.nsadisha.android.ntask.database.Task
 import com.nsadisha.android.ntask.ui.models.TaskHomeModel
 
 class TaskViewModel(application: Application) : AndroidViewModel(application) {
-    private var _tasks = MutableLiveData(listOf(
-        Task(1, "Task 1", "Description 1", "2023-12-12", true),
-        Task(2, "Task 2", "Description 2", "2023-12-12", true),
-        Task(3, "Task 3", "Description 3", "2023-12-12", true),
-        Task(4, "Task 4", "Description 4", "2023-12-12", false),
-        Task(5, "Task 5", "Description 5", "2023-12-12", false),
-        Task(6, "Task 6", "Description 6", "2024-01-01", false)
-    ))
+    private var _tasks = MutableLiveData<List<Task>>(listOf())
     var tasks: LiveData<List<Task>> = _tasks
-    var taskHomeModel: LiveData<TaskHomeModel> = MutableLiveData(_tasks.value?.let { it ->
+
+    private var _taskHomeModel = MutableLiveData(
         TaskHomeModel(
-        taskCount = it.size,
-        completedCount = it.filter { it.completed }.size,
-        todoCount = it.filter { !it.completed }.size
+            taskCount = _tasks.value!!.size,
+            completedCount = tasks.value!!.filter { it.completed }.size,
+            todoCount = tasks.value!!.filter { !it.completed }.size
+        )
     )
-    })
+    var taskHomeModel: LiveData<TaskHomeModel> = _taskHomeModel
+
+    fun addTask(task: Task) {
+        val newTask = Task(
+            id = taskHomeModel.value!!.taskCount.plus(1),
+            name = task.name,
+            description = task.description,
+            completed = task.completed,
+            completeOn = task.completeOn
+        )
+        val updatedTasks = _tasks.value!!.plus(newTask).toMutableList()
+        _tasks.value = updatedTasks
+        updateTaskHomeModel()
+    }
 
     fun updateTask(task: Task){
         val newTask = task.copy()
@@ -34,11 +42,23 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
             updatedTasks[index] = newTask
             _tasks.value = updatedTasks
         }
+        updateTaskHomeModel()
     }
+
     fun toggleCompletion(task: Task){
         val newTask = task.copy()
         newTask.completed = !newTask.completed
 
         updateTask(newTask)
+    }
+
+    private fun updateTaskHomeModel() {
+        val newModel = TaskHomeModel(
+            taskCount = _tasks.value!!.size,
+            completedCount = tasks.value!!.filter { it.completed }.size,
+            todoCount = tasks.value!!.filter { !it.completed }.size
+        )
+
+        _taskHomeModel.value = newModel
     }
 }

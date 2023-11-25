@@ -3,24 +3,15 @@ package com.nsadisha.android.ntask.ui.components
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDefaults
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,21 +20,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusEvent
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nsadisha.android.ntask.R
-import java.time.Instant
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
-import java.util.Calendar
+import com.nsadisha.android.ntask.database.Task
+import com.nsadisha.android.ntask.vm.TaskViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddNewTaskBottomSheet(show: Boolean, onDismiss: () -> Unit) {
+fun AddNewTaskBottomSheet(
+    show: Boolean, onDismiss: () -> Unit,
+    vm: TaskViewModel = viewModel()
+) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var name by remember{ mutableStateOf("") }
     var description by remember{ mutableStateOf("") }
@@ -57,7 +48,20 @@ fun AddNewTaskBottomSheet(show: Boolean, onDismiss: () -> Unit) {
         completeOn = ""
     }
     fun addTask() {
-
+        if(name.isNotEmpty() && completeOn.isNotEmpty()) {
+            if(description.isEmpty()) description = "Description not provided."
+            val task = Task(
+                id = 0,
+                name = name,
+                description = description,
+                completeOn = completeOn,
+                completed = false
+            )
+            vm.addTask(task).also {
+                reset()
+                onDismiss()
+            }
+        }
     }
 
     ModalDatePicker(
