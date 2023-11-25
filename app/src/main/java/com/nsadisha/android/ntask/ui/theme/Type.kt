@@ -37,7 +37,7 @@ val Typography = Typography(
         fontWeight = FontWeight.Bold,
     ),
     bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = comicNeueFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,

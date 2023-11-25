@@ -10,9 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AddNewNoteFAB(){
+fun AddNewTaskFAB(
+    onClick: () -> Unit = {}
+){
     FloatingActionButton(
-        onClick = { },
+        onClick = onClick,
         containerColor = MaterialTheme.colorScheme.tertiary,
         contentColor = MaterialTheme.colorScheme.primary,
         elevation = FloatingActionButtonDefaults.elevation(0.dp)

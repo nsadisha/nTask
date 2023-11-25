@@ -10,46 +10,51 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nsadisha.android.ntask.R
-import com.nsadisha.android.ntask.ui.components.AddNewNoteFAB
+import com.nsadisha.android.ntask.ui.components.AddNewTaskFAB
 import com.nsadisha.android.ntask.ui.components.CategoryCard
 import com.nsadisha.android.ntask.ui.models.CategoryCardModel
 import com.nsadisha.android.ntask.vm.OnboardingViewModel
+import com.nsadisha.android.ntask.vm.TaskViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    addNewTaskCallback: () -> Unit = {},
     vm: OnboardingViewModel = viewModel(),
+    taskViewModel: TaskViewModel = viewModel()
 ) {
     val fName = vm.readName().split(" ")[0]
+    val taskCounts by taskViewModel.taskHomeModel.observeAsState()
+
     val toDoData = CategoryCardModel(
         icon = R.drawable.todo_icon,
         label = "ToDo",
-        count = 7
+        count = taskCounts!!.todoCount
     )
     val completedData = CategoryCardModel(
         icon = R.drawable.completed_icon,
         label = "Completed",
-        count = 7
+        count = taskCounts!!.completedCount
     )
     val allTasksData = CategoryCardModel(
         icon = R.drawable.all_icon,
         label = "All Tasks",
-        count = 7
+        count = taskCounts!!.taskCount
     )
 
     Scaffold(
-        floatingActionButton = { AddNewNoteFAB() }
+        floatingActionButton = { AddNewTaskFAB(onClick = addNewTaskCallback) }
     ) {
         Column(
             modifier = Modifier
