@@ -49,4 +49,11 @@
     <string name="tbs_outline_btn_lbl">Edit</string>
     <string name="tbs_complete_on_lbl">Complete on</string>
     <string name="tbs_empty_description_message">Description not provided.</string>
+
+    <!--delete task-->
+    <string name="dt_filled_btn_lbl">Delete</string>
+    <string name="dt_alert_title">Delete this task?</string>
+    <string name="dt_alert_text">This action is permanent and cannot be undone.</string>
+    <string name="dt_confirm_text">Delete</string>
+    <string name="dt_dismiss_text">Cancel</string>
 </resources>
