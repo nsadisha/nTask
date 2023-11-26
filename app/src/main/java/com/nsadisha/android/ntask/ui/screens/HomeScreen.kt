@@ -24,16 +24,17 @@ import com.nsadisha.android.ntask.R
 import com.nsadisha.android.ntask.ui.components.AddNewTaskFAB
 import com.nsadisha.android.ntask.ui.components.CategoryCard
 import com.nsadisha.android.ntask.ui.models.CategoryCardModel
+import com.nsadisha.android.ntask.ui.models.TaskFilterType
 import com.nsadisha.android.ntask.vm.OnboardingViewModel
 import com.nsadisha.android.ntask.vm.TaskViewModel
-import kotlinx.coroutines.coroutineScope
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     addNewTaskCallback: () -> Unit = {},
     vm: OnboardingViewModel = viewModel(),
-    taskViewModel: TaskViewModel = viewModel()
+    taskViewModel: TaskViewModel = viewModel(),
+    onFilter: () -> Unit = {}
 ) {
     val fName = vm.readName().split(" ")[0]
     val taskCounts by taskViewModel.taskHomeModel.observeAsState()
@@ -50,9 +51,14 @@ fun HomeScreen(
     )
     val allTasksData = CategoryCardModel(
         icon = R.drawable.all_icon,
-        label = "All Tasks",
+        label = "All",
         count = taskCounts!!.taskCount
     )
+
+    fun filter(filter: TaskFilterType) {
+        taskViewModel.updateFilterType(filter)
+        onFilter()
+    }
 
     Scaffold(
         floatingActionButton = { AddNewTaskFAB(onClick = addNewTaskCallback) }
@@ -74,14 +80,26 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    CategoryCard(modifier = Modifier.weight(1f), toDoData)
-                    CategoryCard(modifier = Modifier.weight(1f), completedData)
+                    CategoryCard(
+                        modifier = Modifier.weight(1f),
+                        data = toDoData,
+                        onClick = { filter(TaskFilterType.TODO) }
+                    )
+                    CategoryCard(
+                        modifier = Modifier.weight(1f),
+                        data = completedData,
+                        onClick = { filter(TaskFilterType.COMPLETED) }
+                    )
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    CategoryCard(modifier = Modifier.weight(1f), allTasksData)
+                    CategoryCard(
+                        modifier = Modifier.weight(1f),
+                        data = allTasksData,
+                        onClick = { filter(TaskFilterType.ALL) }
+                    )
                     Spacer(modifier = Modifier.weight(1f))
                 }
             }

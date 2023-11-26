@@ -16,7 +16,8 @@
     <!--tasks screen-->
     <string name="tasks_txt_lbl">Search</string>
     <string name="tasks_txt_hint">Today\'s workout</string>
-    <string name="tasks_empty_message">You don\'t have any tasks to complete!</string>
+    <string name="tasks_empty_message">You don\'t have any tasks yet!</string>
+    <string name="filtered_tasks_empty_message">You don\'t have any tasks to complete!</string>
     <string name="tasks_search_empty_message">No result found!</string>
 
     <!--about bottom sheet-->
