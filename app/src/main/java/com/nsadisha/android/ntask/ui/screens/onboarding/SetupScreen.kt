@@ -44,11 +44,11 @@ fun SetupScreen(
 
     fun handleFinish() {
         if(name != ""){
-            isError = false;
+            isError = false
             vm.writeName(name)
             navController.navigate(AppRoutes.HOME_SCREEN_HOST.name)
         }else{
-            isError = true;
+            isError = true
         }
     }
 
