@@ -32,7 +32,8 @@ import com.nsadisha.android.ntask.vm.TaskViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddNewTaskBottomSheet(
-    show: Boolean, onDismiss: () -> Unit,
+    show: Boolean,
+    onDismiss: () -> Unit,
     vm: TaskViewModel = viewModel()
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -49,7 +50,7 @@ fun AddNewTaskBottomSheet(
     }
     fun addTask() {
         if(name.isNotEmpty() && completeOn.isNotEmpty()) {
-            if(description.isEmpty()) description = "Description not provided."
+//            if(description.isEmpty()) description = "Description not provided."
             val task = Task(
                 id = 0,
                 name = name,

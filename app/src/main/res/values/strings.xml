@@ -17,7 +17,8 @@
     <string name="tasks_txt_lbl">Search</string>
     <string name="tasks_txt_hint">Today\'s workout</string>
     <string name="tasks_empty_message">You don\'t have any tasks yet!</string>
-    <string name="filtered_tasks_empty_message">You don\'t have any tasks to complete!</string>
+    <string name="todo_tasks_empty_message">You don\'t have any tasks to complete!</string>
+    <string name="completed_tasks_empty_message">You don\'t have any completed tasks!</string>
     <string name="tasks_search_empty_message">No result found!</string>
 
     <!--about bottom sheet-->
@@ -38,9 +39,14 @@
     <string name="nbs_complete_support">YYYY-MM-DD</string>
     <string name="nbs_date_formatter">YYYY-MM-dd</string>
 
+    <!--new task bottom sheet-->
+    <string name="ebs_title">Edit Task</string>
+    <string name="ebs_filled_btn_lbl">Update</string>
+
     <!--task bottom sheet-->
     <string name="tbs_complete_lbl">Complete</string>
     <string name="tbs_todo_lbl">Make Todo</string>
     <string name="tbs_outline_btn_lbl">Edit</string>
     <string name="tbs_complete_on_lbl">Complete on</string>
+    <string name="tbs_empty_description_message">Description not provided.</string>
 </resources>

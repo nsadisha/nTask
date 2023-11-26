@@ -91,7 +91,9 @@ fun TasksScreen(
             } else if (searchedTasks?.isEmpty() == true){
                 EmptyState(stringResource(id = R.string.tasks_search_empty_message))
             } else if (filteredTasks?.isEmpty() == true && filterType == TaskFilterType.TODO) {
-                EmptyState(stringResource(id = R.string.filtered_tasks_empty_message))
+                EmptyState(stringResource(id = R.string.todo_tasks_empty_message))
+            } else if (filteredTasks?.isEmpty() == true && filterType == TaskFilterType.COMPLETED) {
+                EmptyState(stringResource(id = R.string.completed_tasks_empty_message))
             }else {
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth(),
