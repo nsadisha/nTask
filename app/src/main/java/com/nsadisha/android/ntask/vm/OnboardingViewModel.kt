@@ -6,11 +6,11 @@ import androidx.lifecycle.AndroidViewModel
 
 class OnboardingViewModel(application: Application) : AndroidViewModel(application) {
     private val _name = "name"
-    private val _default_name = "unregistered_ntask_user"
+    private val defaultName = "unregistered_ntask_user"
     private val sharedPreferences = application.getSharedPreferences("ntask_prefs", Context.MODE_PRIVATE)
 
     fun readName(): String {
-        return sharedPreferences.getString(_name, _default_name) ?: _default_name
+        return sharedPreferences.getString(_name, defaultName) ?: defaultName
     }
 
     fun writeName(value: String) {
@@ -18,6 +18,6 @@ class OnboardingViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     fun isRegistered(): Boolean {
-        return readName() != _default_name
+        return readName() != defaultName
     }
 }
