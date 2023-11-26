@@ -37,11 +37,18 @@ fun TaskBottomSheet(
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showUpdateTaskSheet by remember{ mutableStateOf(false) }
+    var showDeleteAlertDialog by remember { mutableStateOf(false) }
 
     fun toggleCompletion() {
         val newTask = task.copy()
         newTask.completed = !newTask.completed
         viewModel.updateTask(newTask)
+
+        onDismiss()
+    }
+
+    fun deleteTask() {
+        viewModel.deleteTask(task)
 
         onDismiss()
     }
@@ -95,19 +102,28 @@ fun TaskBottomSheet(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ){
                     FilledButton(
-                        label = stringResource(
-                            id = when(task.completed){
-                                false -> R.string.tbs_complete_lbl
-                                true -> R.string.tbs_todo_lbl
-                            }
-                        ),
-                        modifier = Modifier.fillMaxWidth(),
-                        onclick = { toggleCompletion() }
+                            label = stringResource(
+                                id = when(task.completed){
+                                    false -> R.string.tbs_complete_lbl
+                                    true -> R.string.tbs_todo_lbl
+                                }
+                            ),
+                    modifier = Modifier.fillMaxWidth(),
+                    onclick = { toggleCompletion() }
                     )
+
                     OutlineButton(
                         label = stringResource(id = R.string.tbs_outline_btn_lbl),
                         modifier = Modifier.fillMaxWidth(),
                         onclick = { showUpdateTaskSheet = true }
+                    )
+
+                    FilledButton(
+                        label = "Delete",
+                        modifier = Modifier.fillMaxWidth(),
+                        backgroundColor = MaterialTheme.colorScheme.background,
+                        contentColor = MaterialTheme.colorScheme.primary,
+                        onclick = { showDeleteAlertDialog = true }
                     )
                 }
             }
@@ -120,6 +136,16 @@ fun TaskBottomSheet(
                 onDismiss()
             },
             task = task
+        )
+
+        AlertDialog(
+            show = showDeleteAlertDialog,
+            onDismissRequest = { showDeleteAlertDialog = false },
+            onConfirmation = { deleteTask() },
+            dialogTitle = stringResource(id = R.string.dt_alert_title),
+            dialogText = stringResource(id = R.string.dt_alert_text),
+            confirmBtnText = stringResource(id = R.string.dt_confirm_text),
+            dismissBtnText = stringResource(id = R.string.dt_dismiss_text)
         )
     }
 }

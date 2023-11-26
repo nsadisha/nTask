@@ -45,6 +45,12 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun deleteTask(task: Task){
+        viewModelScope.launch {
+            taskDao.delete(task).also { updateTasks() }
+        }
+    }
+
     fun updateFilterType(filterType: TaskFilterType) {
         _filterType.value = filterType
     }
