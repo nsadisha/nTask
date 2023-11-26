@@ -13,6 +13,10 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -32,6 +36,7 @@ fun TaskBottomSheet(
     viewModel: TaskViewModel
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    var showUpdateTaskSheet by remember{ mutableStateOf(false) }
 
     fun toggleCompletion() {
         val newTask = task.copy()
@@ -39,10 +44,6 @@ fun TaskBottomSheet(
         viewModel.updateTask(newTask)
 
         onDismiss()
-    }
-
-    fun editTask() {
-
     }
 
     if (show) {
@@ -63,7 +64,8 @@ fun TaskBottomSheet(
                 )
 
                 Text(
-                    text = task.description,
+                    text = task.description.ifEmpty {
+                        stringResource(id = R.string.tbs_empty_description_message) },
                     style = MaterialTheme.typography.bodyLarge.merge(textAlign = TextAlign.Start),
                     color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.fillMaxWidth()
@@ -105,10 +107,19 @@ fun TaskBottomSheet(
                     OutlineButton(
                         label = stringResource(id = R.string.tbs_outline_btn_lbl),
                         modifier = Modifier.fillMaxWidth(),
-                        onclick = { editTask() }
+                        onclick = { showUpdateTaskSheet = true }
                     )
                 }
             }
         }
+
+        EditTaskBottomSheet(
+            show = showUpdateTaskSheet,
+            onDismiss = {
+                showUpdateTaskSheet = false
+                onDismiss()
+            },
+            task = task
+        )
     }
 }

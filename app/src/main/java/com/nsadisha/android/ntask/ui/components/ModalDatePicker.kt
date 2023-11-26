@@ -11,10 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.nsadisha.android.ntask.R
@@ -30,13 +26,14 @@ fun ModalDatePicker(
     onDismiss: () -> Unit,
     onSelect: (String) -> Unit
 ) {
+    val formatter = stringResource(id = R.string.nbs_date_formatter)
     val date = rememberDatePickerState(
         initialSelectedDateMillis = Instant.now().toEpochMilli()
     )
     val selectedDate = date.selectedDateMillis?.let {
         Instant.ofEpochMilli(it)
             .atOffset(ZoneOffset.UTC)
-            .format(DateTimeFormatter.ofPattern(stringResource(id = R.string.nbs_date_formatter)))
+            .format(DateTimeFormatter.ofPattern(formatter))
     }
 
     if (show) {

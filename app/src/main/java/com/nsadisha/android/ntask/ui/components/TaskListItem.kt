@@ -12,6 +12,9 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import com.nsadisha.android.ntask.R
 import com.nsadisha.android.ntask.database.Task
 import com.nsadisha.android.ntask.vm.TaskViewModel
 
@@ -38,11 +41,16 @@ fun TaskListItem(
         colors = listItemColors,
         headlineContent = { Text(
             text = task.name,
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.titleSmall,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         ) },
         supportingContent = { Text(
-            text = task.description,
-            style = MaterialTheme.typography.bodyLarge
+            text = task.description.ifEmpty {
+                stringResource(id = R.string.tbs_empty_description_message) },
+            style = MaterialTheme.typography.bodyLarge,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         ) },
         leadingContent = {
             RadioButton(
