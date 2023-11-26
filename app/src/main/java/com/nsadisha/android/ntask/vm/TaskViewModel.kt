@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.nsadisha.android.ntask.database.AppDatabase
 import com.nsadisha.android.ntask.database.Task
+import com.nsadisha.android.ntask.ui.models.TaskFilterType
 import com.nsadisha.android.ntask.ui.models.TaskHomeModel
 import kotlinx.coroutines.launch
 
@@ -15,6 +16,9 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
 
     private var _tasks = MutableLiveData<List<Task>>(listOf())
     var tasks: LiveData<List<Task>> = _tasks
+
+    private var _filterType = MutableLiveData(TaskFilterType.TODO)
+    var filterType: LiveData<TaskFilterType> = _filterType
 
     init {
         updateTasks()
@@ -41,13 +45,8 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun toggleCompletion(task: Task){
-        val newTask = task.copy()
-        newTask.completed = !newTask.completed
-
-        viewModelScope.launch {
-            taskDao.update(newTask).also { updateTasks() }
-        }
+    fun updateFilterType(filterType: TaskFilterType) {
+        _filterType.value = filterType
     }
 
     private fun updateTaskHomeModel() {

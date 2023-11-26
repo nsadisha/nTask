@@ -2,6 +2,7 @@ package com.nsadisha.android.ntask.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,40 +19,47 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.nsadisha.android.ntask.R
 import com.nsadisha.android.ntask.ui.models.CategoryCardModel
-import java.time.format.TextStyle
 
 @Composable
-fun CategoryCard(modifier: Modifier, data: CategoryCardModel){
+fun CategoryCard(
+    modifier: Modifier,
+    data: CategoryCardModel,
+    onClick: () -> Unit = {}
+){
     Box(modifier = modifier
-        .background(
-            color = MaterialTheme.colorScheme.surfaceTint,
-            shape = RoundedCornerShape(size = 5.dp)
-        )
-        .padding(start = 16.dp, top = 24.dp, end = 16.dp, bottom = 24.dp),
+        .clickable { onClick() },
     ){
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically)
-        ) {
-            Image(
-                painter = painterResource(id = data.icon),
-                contentDescription = "Icon",
-                modifier = Modifier
-                    .width(30.dp)
-                    .height(30.dp)
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                color = MaterialTheme.colorScheme.surfaceTint,
+                shape = RoundedCornerShape(size = 5.dp)
             )
+            .padding(start = 16.dp, top = 24.dp, end = 16.dp, bottom = 24.dp)
+        ){
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically)
+            ) {
+                Image(
+                    painter = painterResource(id = data.icon),
+                    contentDescription = "Icon",
+                    modifier = Modifier
+                        .width(30.dp)
+                        .height(30.dp)
+                )
+                Text(
+                    text = data.label,
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
             Text(
-                text = data.label,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurface
+                text = data.count.toString(),
+                color = MaterialTheme.colorScheme.secondary,
+                style = MaterialTheme.typography.titleMedium.merge(textAlign = TextAlign.End),
+                modifier = Modifier.fillMaxWidth()
             )
         }
-        Text(
-            text = data.count.toString(),
-            color = MaterialTheme.colorScheme.secondary,
-            style = MaterialTheme.typography.titleMedium.merge(textAlign = TextAlign.End),
-            modifier = Modifier.fillMaxWidth()
-        )
     }
 }

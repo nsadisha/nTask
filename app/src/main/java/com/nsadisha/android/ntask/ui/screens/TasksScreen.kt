@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -34,6 +34,7 @@ import com.nsadisha.android.ntask.ui.components.AddNewTaskFAB
 import com.nsadisha.android.ntask.ui.components.EmptyState
 import com.nsadisha.android.ntask.ui.components.TaskBottomSheet
 import com.nsadisha.android.ntask.ui.components.TaskListItem
+import com.nsadisha.android.ntask.ui.models.TaskFilterType
 import com.nsadisha.android.ntask.vm.TaskViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -48,10 +49,17 @@ fun TasksScreen(
     var query by remember{ mutableStateOf("") }
 
     val tasks by vm.tasks.observeAsState()
+    val filterType by vm.filterType.observeAsState()
 
-    val filteredTasks = tasks?.filter {
+    val searchedTasks = tasks?.filter {
         it.name.contains(query, ignoreCase = true)
             .or(it.description.contains(query, ignoreCase = true))
+    }
+
+    val filteredTasks = when(filterType) {
+            TaskFilterType.COMPLETED -> searchedTasks?.filter { it.completed }
+            TaskFilterType.TODO -> searchedTasks?.filter { !it.completed }
+            else -> searchedTasks
     }
 
     Scaffold(
@@ -80,19 +88,25 @@ fun TasksScreen(
 
             if (tasks?.isEmpty() == true){
                 EmptyState(stringResource(id = R.string.tasks_empty_message))
-            } else if (filteredTasks?.isEmpty() == true){
+            } else if (searchedTasks?.isEmpty() == true){
                 EmptyState(stringResource(id = R.string.tasks_search_empty_message))
-            } else {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                        .verticalScroll(rememberScrollState()),
+            } else if (filteredTasks?.isEmpty() == true && filterType == TaskFilterType.TODO) {
+                EmptyState(stringResource(id = R.string.filtered_tasks_empty_message))
+            }else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
                 ) {
-                    filteredTasks?.forEach {
-                        TaskListItem(it, vm, onClick = {
-                            currentTask = it
-                            showBottomSheet = true
-                        })
+                    filteredTasks?.let { fTasks ->
+                        items(
+                            items = fTasks,
+                            key = {task -> task.id}
+                        ) { task ->
+                            TaskListItem(task, vm, onClick = {
+                                currentTask = task
+                                showBottomSheet = true
+                            })
+                        }
                     }
                 }
             }

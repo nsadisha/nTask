@@ -13,7 +13,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -22,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import com.nsadisha.android.ntask.R
 import com.nsadisha.android.ntask.database.Task
 import com.nsadisha.android.ntask.vm.TaskViewModel
-import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,7 +34,10 @@ fun TaskBottomSheet(
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     fun toggleCompletion() {
-        viewModel.toggleCompletion(task)
+        val newTask = task.copy()
+        newTask.completed = !newTask.completed
+        viewModel.updateTask(newTask)
+
         onDismiss()
     }
 
