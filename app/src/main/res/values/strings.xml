@@ -35,7 +35,7 @@
     <string name="nbs_description_lbl">Description</string>
     <string name="nbs_description_hint">Go to gym at 4:00 pm.</string>
     <string name="nbs_complete_lbl">Complete on</string>
-    <string name="nbs_complete_hint">08/11/20xx</string>
+    <string name="nbs_complete_hint">2023-11-08</string>
     <string name="nbs_complete_support">YYYY-MM-DD</string>
     <string name="nbs_date_formatter">YYYY-MM-dd</string>
 

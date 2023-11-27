@@ -77,7 +77,8 @@ fun TaskBottomSheet(
                     color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.fillMaxWidth()
                 )
-                
+
+                if(task.completeOn.isNotEmpty())
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween

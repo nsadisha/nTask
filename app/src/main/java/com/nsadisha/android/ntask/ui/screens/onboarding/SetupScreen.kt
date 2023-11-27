@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -87,6 +88,9 @@ fun SetupScreen(
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 isError = isError && name == "",
+                keyboardActions = KeyboardActions(
+                    onAny = { handleFinish() }
+                )
             )
         }
 
