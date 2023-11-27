@@ -1,6 +1,5 @@
 package com.nsadisha.android.ntask.ui.components
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -58,7 +57,7 @@ fun TaskListItem(
                 onClick = { toggleCompletion() }
             )
         },
-        modifier = Modifier.clickable(onClick = onClick).animateContentSize(),
+        modifier = Modifier.clickable(onClick = onClick),
         trailingContent = {
             Icon(
                 Icons.Filled.KeyboardArrowRight,
