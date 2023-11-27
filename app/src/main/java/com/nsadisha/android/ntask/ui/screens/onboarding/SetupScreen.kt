@@ -47,6 +47,9 @@ fun SetupScreen(
         if(name != ""){
             isError = false
             vm.writeName(name)
+
+            navController.popBackStack()
+            navController.popBackStack()
             navController.navigate(AppRoutes.HOME_SCREEN_HOST.name)
         }else{
             isError = true
