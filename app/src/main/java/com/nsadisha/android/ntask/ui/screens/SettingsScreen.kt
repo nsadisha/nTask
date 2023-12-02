@@ -1,5 +1,7 @@
 package com.nsadisha.android.ntask.ui.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,14 +19,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.nsadisha.android.ntask.ui.components.AboutBottomSheet
+import com.nsadisha.android.ntask.ui.components.EditNameBottomSheet
 import com.nsadisha.android.ntask.ui.components.SettingsListItem
 
 @Composable
 fun SettingsScreen() {
-    var isDarkMode by remember{ mutableStateOf(false) }
-    var showBottomSheet by remember { mutableStateOf(false) }
+//    var isDarkMode by remember{ mutableStateOf(false) }
+    var showAboutBottomSheet by remember { mutableStateOf(false) }
+    var showEditNameBottomSheet by remember { mutableStateOf(false) }
 
-    fun toggleAboutSheet() { showBottomSheet = !showBottomSheet }
+    fun toggleAboutSheet() { showAboutBottomSheet = !showAboutBottomSheet }
+    fun toggleEditNameSheet() { showEditNameBottomSheet = !showEditNameBottomSheet }
 
     Column(
         modifier = Modifier
@@ -33,26 +38,30 @@ fun SettingsScreen() {
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        SettingsListItem(
-            headlineLabel = "Dark mode",
-            trailing = { Switch(
-                checked = isDarkMode,
-                colors = SwitchDefaults.colors(
-                    uncheckedBorderColor = MaterialTheme.colorScheme.primary,
-                    uncheckedTrackColor = Color.Transparent,
-                    uncheckedThumbColor = MaterialTheme.colorScheme.primary,
-                    checkedThumbColor = MaterialTheme.colorScheme.background
-                ),
-                onCheckedChange = {
-                    isDarkMode = it
-                }
-            ) },
-            onClick = {isDarkMode = !isDarkMode}
-        )
         SettingsListItem("About", onClick = {
-            showBottomSheet = true
+            showAboutBottomSheet = true
         })
+        SettingsListItem("Edit name", onClick = {
+            showEditNameBottomSheet = true
+        })
+        //        SettingsListItem(
+//            headlineLabel = "Dark mode",
+//            trailing = { Switch(
+//                checked = isDarkMode,
+//                colors = SwitchDefaults.colors(
+//                    uncheckedBorderColor = MaterialTheme.colorScheme.primary,
+//                    uncheckedTrackColor = Color.Transparent,
+//                    uncheckedThumbColor = MaterialTheme.colorScheme.primary,
+//                    checkedThumbColor = MaterialTheme.colorScheme.background
+//                ),
+//                onCheckedChange = {
+//                    isDarkMode = it
+//                }
+//            ) },
+//            onClick = {isDarkMode = !isDarkMode}
+//        )
 
-        AboutBottomSheet(show = showBottomSheet, onDismiss = { toggleAboutSheet() })
+        AboutBottomSheet(show = showAboutBottomSheet, onDismiss = { toggleAboutSheet() })
+        EditNameBottomSheet(show = showEditNameBottomSheet, onDismiss = { toggleEditNameSheet() })
     }
 }

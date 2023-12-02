@@ -50,6 +50,10 @@
     <string name="tbs_complete_on_lbl">Complete on</string>
     <string name="tbs_empty_description_message">Description not provided.</string>
 
+    <!--edit name bottom sheet-->
+    <string name="enbs_title">Edit Name</string>
+    <string name="enbs_filled_btn_lbl">Update</string>
+
     <!--delete task-->
     <string name="dt_filled_btn_lbl">Delete</string>
     <string name="dt_alert_title">Delete this task?</string>
