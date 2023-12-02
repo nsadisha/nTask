@@ -7,6 +7,7 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
@@ -15,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.nsadisha.android.ntask.R
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
@@ -28,7 +30,16 @@ fun ModalDatePicker(
 ) {
     val formatter = stringResource(id = R.string.nbs_date_formatter)
     val date = rememberDatePickerState(
-        initialSelectedDateMillis = Instant.now().toEpochMilli()
+        initialSelectedDateMillis = Instant.now().toEpochMilli(),
+        selectableDates = object : SelectableDates {
+            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                return utcTimeMillis > System.currentTimeMillis().minus(100000)
+            }
+
+            override fun isSelectableYear(year: Int): Boolean {
+                return year >= LocalDate.now().year
+            }
+        }
     )
     val selectedDate = date.selectedDateMillis?.let {
         Instant.ofEpochMilli(it)
@@ -53,9 +64,7 @@ fun ModalDatePicker(
             }
             , onDismissRequest = { onDismiss() }
         ) {
-            DatePicker(
-                state = date
-            )
+            DatePicker(state = date)
         }
     }
 }
