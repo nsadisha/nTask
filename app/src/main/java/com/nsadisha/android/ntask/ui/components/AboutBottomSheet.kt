@@ -15,6 +15,8 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -25,6 +27,20 @@ import com.nsadisha.android.ntask.R
 @Composable
 fun AboutBottomSheet(show: Boolean, onDismiss: () -> Unit) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val uriHandler = LocalUriHandler.current
+    val context = LocalContext.current
+
+    fun openDevAccount() {
+        val uri = context.resources.getString(R.string.dev_account)
+        uriHandler.openUri(uri)
+    }
+
+    fun openAppLink() {
+        val pkgName = context.packageName
+        val uri = context.resources.getString(R.string.app_link).plus(pkgName)
+        uriHandler.openUri(uri)
+    }
+
     if (show) {
         ModalBottomSheet(
             onDismissRequest = onDismiss,
@@ -75,12 +91,12 @@ fun AboutBottomSheet(show: Boolean, onDismiss: () -> Unit) {
                     FilledButton(
                         label = stringResource(id = R.string.abs_filled_btn_lbl),
                         modifier = Modifier.fillMaxWidth(),
-                        onclick = { println("hello") }
+                        onclick = { openAppLink() }
                     )
                     OutlineButton(
                         label = stringResource(id = R.string.abs_outline_btn_lbl),
                         modifier = Modifier.fillMaxWidth(),
-                        onclick = { println("hello") }
+                        onclick = { openDevAccount() }
                     )
                 }
             }
