@@ -5,7 +5,7 @@
 
     <!--welcome screen-->
     <string name="welcome">Welcome!</string>
-    <string name="welcome_message">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="welcome_message">NTask is your ultimate task management companion. You can seamlessly set and organize tasks with deadlines on a platform designed for simplicity. Experience a unique, easy, and user-friendly design that enhances your productivity. Stay on top of your goals effortlessly with NTask.</string>
     <string name="welcome_btn_text">Continue</string>
 
     <!--setup screen-->
@@ -24,7 +24,7 @@
     <string name="tasks_search_empty_message">No result found!</string>
 
     <!--about bottom sheet-->
-    <string name="abs_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Ut enim ad minim veniam, quis nostrud.</string>
+    <string name="abs_description">Your Ultimate Task Management Companion.\nSeamlessly set and organize tasks with deadlines on a platform designed for simplicity. Experience a unique, easy, and user-friendly design that enhances your productivity. Stay on top of your goals effortlessly with NTask.</string>
     <string name="abs_filled_btn_lbl">Rate This App</string>
     <string name="abs_outline_btn_lbl">Explore More</string>
 
