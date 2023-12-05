@@ -12,7 +12,7 @@ interface TaskDao {
     @Insert
     suspend fun insert(task: Task)
 
-    @Query("SELECT * FROM tasks")
+    @Query("SELECT * FROM tasks ORDER BY completeOn")
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     suspend fun getAllTasks(): List<Task>
 
