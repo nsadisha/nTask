@@ -6,6 +6,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -33,17 +39,22 @@ fun SettingsScreen() {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
+            .fillMaxSize(),
+//            .padding(top = 16.dp),
+//        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        SettingsListItem("About", onClick = {
-            showAboutBottomSheet = true
-        })
-        SettingsListItem("Edit name", onClick = {
-            showEditNameBottomSheet = true
-        })
+        SettingsListItem(
+            "About",
+            onClick = { showAboutBottomSheet = true },
+            leading = { Icon(Icons.Filled.Info, contentDescription = "info", tint = MaterialTheme.colorScheme.primary)}
+        )
+        Divider(color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f))
+        SettingsListItem(
+            "Edit name",
+            onClick = { showEditNameBottomSheet = true },
+            leading = { Icon(Icons.Filled.Edit, contentDescription = "Edit name", tint = MaterialTheme.colorScheme.primary) }
+        )
         //        SettingsListItem(
 //            headlineLabel = "Dark mode",
 //            trailing = { Switch(
