@@ -1,5 +1,6 @@
 package com.nsadisha.android.ntask.ui.components
 
+import android.content.pm.PackageManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.nsadisha.android.ntask.R
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutBottomSheet(show: Boolean, onDismiss: () -> Unit) {
@@ -39,6 +41,15 @@ fun AboutBottomSheet(show: Boolean, onDismiss: () -> Unit) {
         val pkgName = context.packageName
         val uri = context.resources.getString(R.string.app_link).plus(pkgName)
         uriHandler.openUri(uri)
+    }
+
+    fun getVersionName(): String {
+        return try {
+            context.packageManager
+                .getPackageInfo(context.packageName, 0).versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+            "1.0.0"
+        }
     }
 
     if (show) {
@@ -65,12 +76,12 @@ fun AboutBottomSheet(show: Boolean, onDismiss: () -> Unit) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
                     Text(
-                        text = "nTask",
+                        text = stringResource(id = R.string.app_name),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
-                        text = "Version 1.0.0",
+                        text = "Version ".plus(getVersionName()),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.secondary
                     )
